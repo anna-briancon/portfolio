@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronDown } from 'lucide-react'
+import { X } from 'lucide-react'
 import ProgressiveScrollBar from '../ui/ProgressiveScrollBar'
+import Image from 'next/image'
 
 interface Project {
     id: number
@@ -51,15 +52,6 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
         window.addEventListener('resize', checkScroll)
         return () => window.removeEventListener('resize', checkScroll)
     }, [filteredProjects])
-
-    const chevronAnimation = {
-        y: [0, 10, 0],
-        transition: {
-            duration: 2,
-            ease: "easeInOut",
-            repeat: Infinity,
-        }
-    }
 
     return (
         <section className="mb-10 h-full flex flex-col">
@@ -176,7 +168,7 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6">
                                     {selectedProject.images.map((image, index) => (
                                         <div key={index} className="relative aspect-video rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                                            <img
+                                            <Image
                                                 src={image}
                                                 alt={`${selectedProject.title} - Image ${index + 1}`}
                                                 className="w-full h-full object-cover"

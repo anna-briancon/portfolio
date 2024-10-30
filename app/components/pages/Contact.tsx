@@ -10,7 +10,7 @@ const Contact: React.FC<ContactProps> = ({ setIsHovering }) => {
         <section className="mb-20">
             <h2 className="text-4xl mb-8 tracking-tighter">Contactez-moi</h2>
             <p className="text-lg mb-6 w-full md:w-2/3 lg:w-1/2">
-                Je suis toujours ouverte à de nouvelles opportunités et collaborations. N'hésitez pas à me contacter
+                Je suis toujours ouverte à de nouvelles opportunités et collaborations. N&aposhésitez pas à me contacter
                 si vous souhaitez travailler ensemble ou simplement dire bonjour.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">

@@ -50,7 +50,7 @@ const Home: React.FC<HomeProps> = ({ setCurrentSection, setIsHovering }) => {
       clearInterval(interval)
       clearInterval(cursorInterval)
     }
-  }, [])
+  }, [isDeleting])
 
   return (
     <section className="mb-20">

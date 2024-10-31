@@ -23,7 +23,7 @@ const About: React.FC<AboutProps> = ({ toolCategories }) => {
     return (
         <section className="mb-10 relative">
             <div
-                className={`w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] transition-transform duration-500 ease-in-out cursor-pointer shrink-0 ${isHovered ? 'rotate-y-180' : ''
+                className={`w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] transition-transform duration-500 ease-in-out mb-8 cursor-pointer shrink-0 ${isHovered ? 'rotate-y-180' : ''
                     }`}
                 style={{ transformStyle: 'preserve-3d' }}
                 onMouseEnter={() => setIsHovered(true)}

@@ -22,8 +22,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections, currentSection, setCu
     useEffect(() => {
         const checkMobileAndScroll = () => {
             const isMobile = window.innerWidth < 768
-            const hasScrolledContent = currentSection === 'projets' ||
-                currentSection === 'à propos'
+            const hasScrolledContent = window.scrollY > 100
             setShouldShowBurger(isMobile && hasScrolledContent)
         }
 
@@ -63,7 +62,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections, currentSection, setCu
                     ? 'inset-2 md:inset-9 bg-[#f4f1ec] flex items-center justify-center'
                     : shouldShowBurger
                         ? 'hidden'
-                        : 'top-16 md:top-20 right-10 md:right-20 block'}
+                        : 'top-10 md:top-20 right-10 md:right-20 block'}
             `}>
                 <ul className={`
                     flex flex-col items-end space-y-4

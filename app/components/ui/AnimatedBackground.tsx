@@ -17,8 +17,12 @@ const AnimatedBackground: React.FC = () => {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    const updateCanvasSize = () => {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+    }
+
+    updateCanvasSize()
 
     const particleCount = 100
     const particles: Particle[] = []
@@ -69,8 +73,7 @@ const AnimatedBackground: React.FC = () => {
     animate()
 
     const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      updateCanvasSize()
     }
 
     window.addEventListener('resize', handleResize)
@@ -80,7 +83,7 @@ const AnimatedBackground: React.FC = () => {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />
+  return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full -z-10" />
 }
 
 export default AnimatedBackground

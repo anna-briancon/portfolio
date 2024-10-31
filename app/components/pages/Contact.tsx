@@ -20,8 +20,8 @@ const Contact: React.FC<ContactProps> = ({ setIsHovering }) => {
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
                 >
-                    <Mail className="w-5 h-5 text-gray-600 transition-colors group-hover:text-[#999]" />
-                    <span className="ml-2 text-lg text-gray-600 transition-colors group-hover:text-[#999] break-all sm:break-normal">
+                    <Mail className="w-5 h-5 text-gray-600 transition-colors group-hover:text-[#999] dark:group-hover:text-[#888] dark:text-[#666]" />
+                    <span className="ml-2 text-lg text-gray-600 transition-colors group-hover:text-[#999] break-all sm:break-normal dark:group-hover:text-[#888] dark:text-[#666]">
                         anna.briancon33@gmail.com
                     </span>
                 </a>
@@ -34,7 +34,7 @@ const Contact: React.FC<ContactProps> = ({ setIsHovering }) => {
                         onMouseEnter={() => setIsHovering(true)}
                         onMouseLeave={() => setIsHovering(false)}
                     >
-                        <Linkedin className="w-8 h-8 text-gray-600 transition-colors group-hover:text-[#999]" />
+                        <Linkedin className="w-8 h-8 text-gray-600 transition-colors group-hover:text-[#999] dark:group-hover:text-[#666] dark:text-[#666]" />
                         <span className="sr-only">LinkedIn Profile</span>
                     </a>
                     <a
@@ -45,7 +45,7 @@ const Contact: React.FC<ContactProps> = ({ setIsHovering }) => {
                         onMouseEnter={() => setIsHovering(true)}
                         onMouseLeave={() => setIsHovering(false)}
                     >
-                        <Github className="w-8 h-8 text-gray-600 transition-colors group-hover:text-[#999]" />
+                        <Github className="w-8 h-8 text-gray-600 transition-colors group-hover:text-[#999] dark:group-hover:text-[#666] dark:text-[#666]" />
                         <span className="sr-only">GitHub Profile</span>
                     </a>
                 </div>

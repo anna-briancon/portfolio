@@ -53,7 +53,7 @@ export default function Portfolio() {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-[#1a1a1a] text-white' : 'bg-[#f4f1ec] text-[#333]'} overflow-hidden font-sans p-2 md:p-5 transition-colors duration-300`}>
-      <div className={`border-2 ${isDarkMode ? 'border-white' : 'border-black'} border-opacity-60 fixed inset-4 md:inset-9`}>
+      <div className={`border-2 ${isDarkMode ? 'border-white' : 'border-black'} border-opacity-60 fixed inset-4 md:inset-9 overflow-hidden`}>
         <AnimatedBackground />
         {!isMobile && (
           <motion.div
@@ -73,7 +73,7 @@ export default function Portfolio() {
         )}
         
         {/* Theme Toggle Buttons */}
-        <div className="fixed right-6 md:right-0 bottom-6 -translate-y-1/2 flex flex-col gap-4 z-50">
+        <div className="fixed right-6 md:right-11 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
           <button
             onClick={() => setIsDarkMode(false)}
             className={`p-2 rounded-full transition-colors duration-300 ${
@@ -109,7 +109,7 @@ export default function Portfolio() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="absolute bottom-2 md:bottom-5 left-5 md:left-20 right-5 md:right-10 max-h-[calc(100vh-80px)] md:max-h-[calc(100vh-40px)] overflow-y-auto scrollbar-hide"
+            className="absolute bottom-2 md:bottom-5 left-5 md:left-20 right-5 md:right-10 max-h-[calc(80vh-40px)] overflow-y-auto scrollbar-hide"
           >
             {currentSection === "accueil" && (
               <Home setCurrentSection={setCurrentSection} setIsHovering={setIsHovering} />
@@ -154,12 +154,6 @@ export default function Portfolio() {
 
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
-        }
-
-        @media (max-width: 768px) {
-          body {
-            overflow-y: auto;
-          }
         }
       `}</style>
     </div>

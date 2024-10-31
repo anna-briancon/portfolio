@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { SunMedium, Moon } from 'lucide-react'
 import Navigation from './components/Navigation'
 import Home from './components/pages/Home'
 import Projects from './components/pages/Projects'
@@ -18,6 +19,7 @@ export default function Portfolio() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -41,10 +43,18 @@ export default function Portfolio() {
     }
   }, [isMobile])
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDarkMode])
+
   return (
-    <div className="min-h-screen bg-[#f4f1ec] text-[#333] overflow-hidden font-sans p-2 md:p-5">
-<div className="border-2 border-black border-opacity-60 fixed inset-4 md:inset-9">
-<AnimatedBackground />
+    <div className={`min-h-screen ${isDarkMode ? 'bg-[#1a1a1a] text-white' : 'bg-[#f4f1ec] text-[#333]'} overflow-hidden font-sans p-2 md:p-5 transition-colors duration-300`}>
+      <div className={`border-2 ${isDarkMode ? 'border-white' : 'border-black'} border-opacity-60 fixed inset-4 md:inset-9`}>
+        <AnimatedBackground />
         {!isMobile && (
           <motion.div
             className="fixed top-0 left-0 w-6 h-6 rounded-full bg-[#333] mix-blend-difference pointer-events-none z-50"
@@ -61,6 +71,31 @@ export default function Portfolio() {
             transition={{ type: "spring", stiffness: 500, damping: 28 }}
           />
         )}
+        
+        {/* Theme Toggle Buttons */}
+        <div className="fixed right-6 md:right-0 bottom-6 -translate-y-1/2 flex flex-col gap-4 z-50">
+          <button
+            onClick={() => setIsDarkMode(false)}
+            className={`p-2 rounded-full transition-colors duration-300 ${
+              !isDarkMode ? 'text-[#333] bg-white shadow-md' : 'text-white hover:bg-white/10'
+            }`}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <SunMedium className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setIsDarkMode(true)}
+            className={`p-2 rounded-full transition-colors duration-300 ${
+              isDarkMode ? 'text-white bg-[#333] shadow-md' : 'text-[#333] hover:bg-black/10'
+            }`}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <Moon className="w-4 h-4" />
+          </button>
+        </div>
+
         <Navigation
           sections={sections}
           currentSection={currentSection}

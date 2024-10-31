@@ -95,8 +95,8 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                             className={`
                                 flex justify-between items-center py-3 md:py-4 px-3 md:px-6
                                 border-b border-gray-200 last:border-b-0 
-                                hover:bg-gray-100 transition-all cursor-pointer
-                                ${selectedProject?.id === project.id ? 'bg-gray-100' : ''}
+                                hover:bg-gray-100 dark:hover:bg-[#333] transition-all cursor-pointer
+                                ${selectedProject?.id === project.id ? 'bg-gray-100 dark:bg-[#333]' : ''}
                                 ${index >= 3 ? 'mt-4' : ''}
                             `}
                             onClick={() => setSelectedProject(project)}
@@ -123,20 +123,18 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                             transition={{ duration: 0.3 }}
                             className={`
                                 p-4 md:p-6 shadow-lg overflow-y-auto scrollbar-hide
-                                bg-white/90 backdrop-blur-sm rounded-lg
+                                bg-white/90 dark:bg-[#333] backdrop-blur-sm rounded-lg
                                 ${isMobile
                                     ? 'w-full relative mt-4'
                                     : 'w-[45%] absolute right-0 bottom-0 ml-8'}
                             `}
                             style={{
                                 maxHeight: isMobile ? '40vh' : '50vh',
-                                background: 'radial-gradient(circle, white 0%, white 20%, rgba(255,255,255,0) 100%)',
-                                backgroundClip: 'padding-box',
                             }}
                         >
                             <button
                                 onClick={() => setSelectedProject(null)}
-                                className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                                className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100  transition-colors"
                                 onMouseEnter={() => setIsHovering(true)}
                                 onMouseLeave={() => setIsHovering(false)}
                             >
@@ -146,7 +144,7 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                             <div className="space-y-4 md:space-y-6 pb-6">
                                 <div>
                                     <h3 className="text-lg md:text-xl lg:text-2xl font-semibold mb-2 ">{selectedProject.title}</h3>
-                                    <p className="text-gray-600 text-sm md:text-base">{selectedProject.description}</p>
+                                    <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base">{selectedProject.description}</p>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <div className="inline-block px-3 py-1 rounded-full bg-[#e0dcd4] text-sm text-gray-600">
@@ -161,7 +159,7 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                                         ))}
                                     </div>
                                 </div>
-                                <p className="text-gray-700 leading-relaxed text-sm md:text-base">
+                                <p className="text-gray-700 dark:text-gray-400 leading-relaxed text-sm md:text-base">
                                     {selectedProject.text}
                                 </p>
 
@@ -172,6 +170,8 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                                                 src={image}
                                                 alt={`${selectedProject.title} - Image ${index + 1}`}
                                                 className="w-full h-full object-cover"
+                                                width={500}
+                                                height={300}
                                             />
                                         </div>
                                     ))}

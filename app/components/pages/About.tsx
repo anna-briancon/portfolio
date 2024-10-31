@@ -23,7 +23,7 @@ const About: React.FC<AboutProps> = ({ toolCategories }) => {
     return (
         <section className="mb-10 relative">
             <div
-                className={`w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] mb-10 transition-transform duration-500 ease-in-out cursor-pointer shrink-0 ${isHovered ? 'rotate-y-180' : ''
+                className={`w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] transition-transform duration-500 ease-in-out cursor-pointer shrink-0 ${isHovered ? 'rotate-y-180' : ''
                     }`}
                 style={{ transformStyle: 'preserve-3d' }}
                 onMouseEnter={() => setIsHovered(true)}
@@ -55,10 +55,10 @@ const About: React.FC<AboutProps> = ({ toolCategories }) => {
                     <div className="flex flex-col lg:flex-row gap-8 lg:gap-32">
                         <div className="w-full lg:max-w-xl">
                             <p className="text-lg mb-6">
-                                Développeuse Fullstack passionnée par l&aposinformatique, le design et la photographie, je mets mon énergie et ma curiosité au service de chaque projet. J&aposadore explorer de nouvelles façons de créer des expériences interactives, en mélangeant technique et créativité.
+                                Développeuse Fullstack passionnée par l&apos;informatique, le design et la photographie, je mets mon énergie et ma curiosité au service de chaque projet. J&apos;adore explorer de nouvelles façons de créer des expériences interactives, en mélangeant technique et créativité.
                             </p>
                             <p className="text-lg mb-6">
-                                Au quotidien, j&aposutilise des outils comme <strong>React</strong> et <strong>Vue</strong> pour concevoir des interfaces fluides et engageantes, et <strong>Symfony</strong> et <strong>Node.js</strong> pour donner vie à des solutions backend solides. Mon objectif est de concevoir des applications web qui soient à la fois esthétiques et performantes, pour offrir des expériences uniques et mémorables.
+                                Au quotidien, j&apos;utilise des outils comme <strong>React</strong> et <strong>Vue</strong> pour concevoir des interfaces fluides et engageantes, et <strong>Symfony</strong> et <strong>Node.js</strong> pour donner vie à des solutions backend solides. Mon objectif est de concevoir des applications web qui soient à la fois esthétiques et performantes, pour offrir des expériences uniques et mémorables.
                             </p>
                         </div>
                         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8">

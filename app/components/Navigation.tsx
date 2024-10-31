@@ -23,8 +23,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections, currentSection, setCu
         const checkMobileAndScroll = () => {
             const isMobile = window.innerWidth < 768
             const hasScrolledContent = currentSection === 'projets' ||
-                currentSection === 'à propos' ||
-                window.scrollY > 50
+                currentSection === 'à propos'
             setShouldShowBurger(isMobile && hasScrolledContent)
         }
 

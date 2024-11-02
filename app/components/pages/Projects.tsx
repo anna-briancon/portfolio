@@ -77,13 +77,13 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                 <h2 className="text-3xl md:text-4xl mb-6 md:mb-8 tracking-tighter">Mes Projets</h2>
 
                 {/* Categories */}
-                <div className="flex flex-nowrap overflow-x-auto md:flex-wrap gap-2 md:gap-3 mb-4 md:mb-6 pb-2 md:pb-0 scrollbar-hide">
+                <div className="flex flex-nowrap overflow-x-auto md:flex-wrap gap-2 md:gap-3 pb-2 md:pb-0 scrollbar-hide">
                     {categories.map((category) => (
                         <button
                             key={category}
                             onClick={() => setCurrentCategory(category)}
                             className={`
-                                px-3 md:px-4 py-2 rounded-full whitespace-nowrap
+                                px-3 md:px-3 py-2 rounded-full whitespace-nowrap
                                 ${currentCategory === category
                                     ? "bg-[#333] text-white"
                                     : "bg-white text-[#333] hover:bg-[#e0dcd4]"
@@ -112,8 +112,8 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                                 transition={{ duration: 0.3 }}
                                 ref={projectsContainerRef}
                                 id="projet"
-                                className="w-full lg:w-1/2 overflow-y-auto pr-0 lg:pr-4 pt-4 scrollbar-hide"
-                                style={{ maxHeight: 'calc(70vh - 300px)' }}
+                                className="w-full lg:w-1/2 overflow-y-auto pr-0 lg:pr-4 pt-4 scrollbar-hide pb-8"
+                                style={{ maxHeight: 'calc(71vh - 300px)' }}
                             >
                                 <div className="absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-[#f4f1ec] to-transparent pointer-events-none dark:from-[#1A1A1A] dark:to-transparent z-10 w-1/2" />
 
@@ -142,89 +142,91 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                         )}
                     </AnimatePresence>
 
-                    {/* Project Details */}
-                    <AnimatePresence mode="wait">
-                        {selectedProject && (
-                            <motion.div
-                                ref={projectDetailsRef}
-                                key={selectedProject.id}
-                                initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: -50 }}
-                                animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }}
-                                exit={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: -50 }}
-                                transition={{ duration: 0.3 }}
-                                className={`
-                                    p-4 md:p-6 shadow-lg overflow-y-auto scrollbar-hide
-                                    bg-white/90 dark:bg-[#333] backdrop-blur-sm z-index-10
-                                    ${isMobile
-                                        ? 'w-full relative'
-                                        : 'w-[45%] absolute right-0 bottom-0 ml-8'}
-                                `}
-                                style={{
-                                    maxHeight: isMobile ? 'calc(100vh - 300px)' : '40vh',
-                                }}
-                            >
-                                <button
-                                    onClick={() => setSelectedProject(null)}
-                                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
-                                    onMouseEnter={() => setIsHovering(true)}
-                                    onMouseLeave={() => setIsHovering(false)}
-                                >
-                                    <X size={24} className="text-gray-500 hover:text-gray-700" />
-                                </button>
 
-                                <div className="space-y-4 md:space-y-6 pb-6">
-                                    <div>
-                                        <h3 className="text-lg md:text-xl lg:text-2xl font-semibold mb-2">{selectedProject.title}</h3>
-                                        <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base">{selectedProject.description}</p>
+
+                </div>
+                {/* Project Details */}
+                <AnimatePresence mode="wait">
+                    {selectedProject && (
+                        <motion.div
+                            ref={projectDetailsRef}
+                            key={selectedProject.id}
+                            initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: -50 }}
+                            animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }}
+                            exit={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: -50 }}
+                            transition={{ duration: 0.3 }}
+                            className={`
+                                    p-4 md:p-6 shadow-lg overflow-y-auto scrollbar-hide
+                                    bg-white/90 dark:bg-[#333] backdrop-blur-sm
+                                    ${isMobile
+                                    ? 'w-full relative'
+                                    : 'w-[45%] h-[100%] absolute right-0 bottom-0 ml-8'}
+                                `}
+                            style={{
+                                maxHeight: isMobile ? 'calc(90vh - 300px)' : '90vh',
+                            }}
+                        >
+                            <button
+                                onClick={() => setSelectedProject(null)}
+                                className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                                onMouseEnter={() => setIsHovering(true)}
+                                onMouseLeave={() => setIsHovering(false)}
+                            >
+                                <X size={24} className="text-gray-500 hover:text-gray-700" />
+                            </button>
+
+                            <div className="space-y-4 md:space-y-6 pb-6">
+                                <div>
+                                    <h3 className="text-lg md:text-xl lg:text-2xl font-semibold mb-2">{selectedProject.title}</h3>
+                                    <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base">{selectedProject.description}</p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="inline-block px-3 py-1 rounded-full bg-[#e0dcd4] text-sm text-gray-600">
+                                        {selectedProject.category}
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="inline-block px-3 py-1 rounded-full bg-[#e0dcd4] text-sm text-gray-600">
-                                            {selectedProject.category}
-                                        </div>
-                                        <div className="flex flex-wrap gap-2">
-                                            {selectedProject.techno.split(', ').map((tech, index) => (
-                                                <div key={index} className="inline-block px-3 py-1 rounded-full bg-[#e0dcd4] text-sm text-gray-600">
-                                                    {tech}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    {selectedProject.websiteUrl && (
-                                        <div className="mt-4">
-                                            <a
-                                                href={selectedProject.websiteUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center px-4 py-2 bg-[#333] text-white rounded-md hover:bg-[#444] transition-colors dark:bg-[#e0dcd4] dark:text-[#333] dark:hover:bg-[#d3cfc6]"
-                                                onMouseEnter={() => setIsHovering(true)}
-                                                onMouseLeave={() => setIsHovering(false)}
-                                            >
-                                                <ExternalLink size={18} className="mr-2" />
-                                                Aller sur le site
-                                            </a>
-                                        </div>
-                                    )}
-                                    <p className="text-gray-700 dark:text-gray-400 leading-relaxed text-sm md:text-base">
-                                        {selectedProject.text}
-                                    </p>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6">
-                                        {selectedProject.images.map((image, index) => (
-                                            <div key={index} className="relative aspect-video rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                                                <Image
-                                                    src={image}
-                                                    alt={`${selectedProject.title} - Image ${index + 1}`}
-                                                    className="w-full h-full object-cover"
-                                                    width={500}
-                                                    height={300}
-                                                />
+                                    <div className="flex flex-wrap gap-2">
+                                        {selectedProject.techno.split(', ').map((tech, index) => (
+                                            <div key={index} className="inline-block px-3 py-1 rounded-full bg-[#e0dcd4] text-sm text-gray-600">
+                                                {tech}
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                                {selectedProject.websiteUrl && (
+                                    <div className="mt-4">
+                                        <a
+                                            href={selectedProject.websiteUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center px-4 py-2 bg-[#333] text-white rounded-md hover:bg-[#444] transition-colors dark:bg-[#e0dcd4] dark:text-[#333] dark:hover:bg-[#d3cfc6]"
+                                            onMouseEnter={() => setIsHovering(true)}
+                                            onMouseLeave={() => setIsHovering(false)}
+                                        >
+                                            <ExternalLink size={18} className="mr-2" />
+                                            Aller sur le site
+                                        </a>
+                                    </div>
+                                )}
+                                <p className="text-gray-700 dark:text-gray-400 leading-relaxed text-sm md:text-base">
+                                    {selectedProject.text}
+                                </p>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6">
+                                    {selectedProject.images.map((image, index) => (
+                                        <div key={index} className="relative aspect-video rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                                            <Image
+                                                src={image}
+                                                alt={`${selectedProject.title} - Image ${index + 1}`}
+                                                className="w-full h-full object-cover"
+                                                width={500}
+                                                height={300}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
 
             <style jsx global>{`

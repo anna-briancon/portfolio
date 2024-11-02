@@ -134,7 +134,7 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                                     </div>
                                 ))}
                                 {canScroll && (
-                                    <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f4f1ec] to-transparent pointer-events-none" />
+                                    <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f4f1ec] to-transparent pointer-events-none dark:from-[#1A1A1A] dark:to-transparent" />
                                 )}
                             </motion.div>
                         )}

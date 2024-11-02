@@ -55,10 +55,11 @@ const About: React.FC<AboutProps> = ({ toolCategories }) => {
                     <div className="flex flex-col lg:flex-row gap-8 lg:gap-32">
                         <div className="w-full lg:max-w-xl">
                             <p className="text-lg mb-6">
-                                Développeuse Fullstack passionnée par l&apos;informatique, le design et la photographie, je mets mon énergie et ma curiosité au service de chaque projet. J&apos;adore explorer de nouvelles façons de créer des expériences interactives, en mélangeant technique et créativité.
+                                Je m&apos;appelle Anna Briançon, je suis actuellement en formation de développeuse Fullstack à MyDigitalSchool Annecy. 
+                                Passionnée par l&apos;informatique, le design et la photographie, j'aime mettre mes compétences et mon énergie dans chaque projet.
                             </p>
                             <p className="text-lg mb-6">
-                                Au quotidien, j&apos;utilise des outils comme <strong>React</strong> et <strong>Vue</strong> pour concevoir des interfaces fluides et engageantes, et <strong>Symfony</strong> et <strong>Node.js</strong> pour donner vie à des solutions backend solides. Mon objectif est de concevoir des applications web qui soient à la fois esthétiques et performantes, pour offrir des expériences uniques et mémorables.
+                                Au quotidien, j&apos;utilise des outils comme <strong>React</strong> et <strong>Vue</strong> pour concevoir des interfaces fluides et <strong>Symfony</strong> et <strong>Node.js</strong> pour le backend. Mon objectif est de concevoir des applications web qui soient à la fois esthétiques et performantes, pour offrir des expériences uniques.
                             </p>
                         </div>
                         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8">

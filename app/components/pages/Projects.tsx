@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ExternalLink } from 'lucide-react'
+import { X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import ProgressiveScrollBar from '../ui/ProgressiveScrollBar'
 import Image from 'next/image'
 
@@ -26,6 +26,9 @@ interface ProjectsProps {
 const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering }) => {
     const [currentCategory, setCurrentCategory] = useState("Tous")
     const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+    const [selectedImage, setSelectedImage] = useState<string | null>(null)
+    const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
+    const [isFullSizeView, setIsFullSizeView] = useState(false)
     const projectsContainerRef = useRef<HTMLDivElement>(null)
     const projectDetailsRef = useRef<HTMLDivElement>(null)
     const [canScroll, setCanScroll] = useState(false)
@@ -40,7 +43,7 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (projectDetailsRef.current && !projectDetailsRef.current.contains(event.target as Node)) {
+            if (projectDetailsRef.current && !projectDetailsRef.current.contains(event.target as Node) && !isFullSizeView) {
                 setSelectedProject(null)
             }
         }
@@ -52,7 +55,7 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
-    }, [selectedProject])
+    }, [selectedProject, isFullSizeView])
 
     const filteredProjects = currentCategory === "Tous"
         ? projects
@@ -70,6 +73,33 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
         window.addEventListener('resize', checkScroll)
         return () => window.removeEventListener('resize', checkScroll)
     }, [filteredProjects])
+
+    const handleImageClick = (image: string, index: number) => {
+        setSelectedImage(image)
+        setCurrentImageIndex(index)
+        setIsFullSizeView(true)
+    }
+
+    const handleCloseImage = () => {
+        setSelectedImage(null)
+        setIsFullSizeView(false)
+    }
+
+    const handlePrevImage = () => {
+        if (selectedProject) {
+            const newIndex = currentImageIndex === 0 ? selectedProject.images.length - 1 : currentImageIndex - 1
+            setCurrentImageIndex(newIndex)
+            setSelectedImage(selectedProject.images[newIndex])
+        }
+    }
+
+    const handleNextImage = () => {
+        if (selectedProject) {
+            const newIndex = currentImageIndex === selectedProject.images.length - 1 ? 0 : currentImageIndex + 1
+            setCurrentImageIndex(newIndex)
+            setSelectedImage(selectedProject.images[newIndex])
+        }
+    }
 
     return (
         <section className="mb-10 h-full flex flex-col">
@@ -141,10 +171,47 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                             </motion.div>
                         )}
                     </AnimatePresence>
-
-
-
                 </div>
+                {selectedImage && (
+                    <div 
+                        className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="relative max-w-4xl w-full h-full flex items-center justify-center">
+                            <button
+                                onClick={handleCloseImage}
+                                className="absolute top-4 right-4 p-2 text-[#333] hover:bg-[#e0dcd4] transition-colors bg-white rounded-full dark:bg-[#444] dark:text-white dark:bg-opacity-50 dark:hover:bg-[#333]"
+                                onMouseEnter={() => setIsHovering(true)}
+                                onMouseLeave={() => setIsHovering(false)}
+                            >
+                                <X size={24} />
+                            </button>
+                            <button
+                                onClick={handlePrevImage}
+                                className="absolute left-[-60px] p-2 text-[#333] hover:bg-[#e0dcd4] transition-colors bg-white rounded-full dark:bg-[#444] dark:text-white dark:bg-opacity-50 dark:hover:bg-[#333]"
+                                onMouseEnter={() => setIsHovering(true)}
+                                onMouseLeave={() => setIsHovering(false)}
+                            >
+                                <ChevronLeft size={24} />
+                            </button>
+                            <button
+                                onClick={handleNextImage}
+                                className="absolute right-[-60px] p-2 text-[#333] hover:bg-[#e0dcd4] transition-colors bg-white rounded-full dark:bg-[#444] dark:text-white dark:bg-opacity-50 dark:hover:bg-[#333]"
+                                onMouseEnter={() => setIsHovering(true)}
+                                onMouseLeave={() => setIsHovering(false)}
+                            >
+                                <ChevronRight size={24} />
+                            </button>
+                            <Image
+                                src={selectedImage}
+                                alt="Full-size project image"
+                                className="max-h-full max-w-full object-contain"
+                                width={1200}
+                                height={800}
+                            />
+                        </div>
+                    </div>
+                )}
                 {/* Project Details */}
                 <AnimatePresence mode="wait">
                     {selectedProject && (
@@ -156,14 +223,14 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                             exit={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: -50 }}
                             transition={{ duration: 0.3 }}
                             className={`
-                                    p-4 md:p-6 shadow-lg overflow-y-auto scrollbar-hide
-                                    bg-white/90 dark:bg-[#333] backdrop-blur-sm
-                                    ${isMobile
+                                p-4 md:p-6 shadow-lg overflow-y-auto scrollbar-hide
+                                bg-white/90 dark:bg-[#333] backdrop-blur-sm
+                                ${isMobile
                                     ? 'w-full relative'
                                     : 'w-[45%] h-[100%] absolute right-0 bottom-0 ml-8'}
-                                `}
+                            `}
                             style={{
-                                maxHeight: isMobile ? 'calc(90vh - 300px)' : '90vh',
+                                maxHeight: isMobile ? 'calc(80vh - 300px)' : '90vh',
                             }}
                         >
                             <button
@@ -212,13 +279,19 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6">
                                     {selectedProject.images.map((image, index) => (
-                                        <div key={index} className="relative aspect-video rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                                        <div 
+                                            key={index} 
+                                            className="relative aspect-video rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+                                            onClick={() => handleImageClick(image, index)}
+                                        >
                                             <Image
                                                 src={image}
                                                 alt={`${selectedProject.title} - Image ${index + 1}`}
                                                 className="w-full h-full object-cover"
                                                 width={500}
                                                 height={300}
+                                                onMouseEnter={() => setIsHovering(true)}
+                                                onMouseLeave={() => setIsHovering(false)}
                                             />
                                         </div>
                                     ))}

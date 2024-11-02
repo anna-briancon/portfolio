@@ -112,9 +112,11 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
                                 transition={{ duration: 0.3 }}
                                 ref={projectsContainerRef}
                                 id="projet"
-                                className="w-full lg:w-1/2 overflow-y-auto pr-0 lg:pr-4 mt-4 scrollbar-hide"
+                                className="w-full lg:w-1/2 overflow-y-auto pr-0 lg:pr-4 pt-4 scrollbar-hide"
                                 style={{ maxHeight: 'calc(70vh - 300px)' }}
                             >
+                                <div className="absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-[#f4f1ec] to-transparent pointer-events-none dark:from-[#1A1A1A] dark:to-transparent z-10 w-1/2" />
+
                                 {filteredProjects.map((project, index) => (
                                     <div
                                         key={project.id}

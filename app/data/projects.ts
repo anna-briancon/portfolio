@@ -1,6 +1,15 @@
-import { desc, i } from "framer-motion/client";
+interface Project {
+    id: number;
+    title: string;
+    category: string;
+    techno: string;
+    description: string;
+    text: string;
+    images: string[];
+    websiteUrl: string | null;
+}
 
-export const projects = [
+export const projects: Project[] = [
     {
         id: 1,
         title: "Netflop",
@@ -39,7 +48,7 @@ export const projects = [
         description: "Projet de jeu de labyrinthe mettant en scène un joueur et des monstres.",
         text: "Réalisation d'un jeu interactif permettant au joueur de naviguer à travers un labyrinthe, avec la présence de monstres ajoutant un élément de défi au jeu.",
         images: ["/projets/labyrinthe.png"],
-        webSiteUrl: null
+        websiteUrl: null
     },
     {
         id: 5,
@@ -56,8 +65,8 @@ export const projects = [
         title: "Grave & cie",
         category: "Base de donnée",
         techno: "Win design, SQL",
-        description: "Projet visant à proposer une solution d’organisation d’inventaire pour une entreprise fictive de négoce Bordelais.",
-        text: "Réalisation d’un Modèle Conceptuel des Données (MCD) et d’un script de création de base de données. Élaboration de requêtes SQL, conception d'une maquette d’application avec ses fonctionnalités.",
+        description: "Projet visant à proposer une solution d'organisation d'inventaire pour une entreprise fictive de négoce Bordelais.",
+        text: "Réalisation d'un Modèle Conceptuel des Données (MCD) et d'un script de création de base de données. Élaboration de requêtes SQL, conception d'une maquette d'application avec ses fonctionnalités.",
         images: ["/projets/graveetcie.png"],
         websiteUrl: null
     },
@@ -79,7 +88,7 @@ export const projects = [
         description: 'Projet en groupe pour réaliser le jeu "6 qui prend !" avec une interface graphique.',
         text: "Jeu réalisé en C# avec la possibilité pour les joueurs de jouer à plusieurs sur un même ordinateur.",
         images: ["/projets/6quiprend.png"],
-        webSiteUrl: null
+        websiteUrl: null
     },
     {
         id: 9,
@@ -96,7 +105,7 @@ export const projects = [
         title: "Automatisation de Page Web",
         category: "Réseaux",
         techno: "Bash, HTML5, CSS3",
-        description: "Création d’un script automatisé générant des pages web à partir d’un “storyboard” préétabli.",
+        description: "Création d'un script automatisé générant des pages web à partir d'un storyboard préétabli.",
         text: "Réalisation d'un script Bash fonctionnel permettant la création automatisée de pages web. Le fonctionnement du script est représenté à l'aide d'un schéma explicatif.",
         images: ["/projets/automatisation.png"],
         websiteUrl: null
@@ -151,5 +160,6 @@ export const projects = [
         images: ["/projets/affichemaincare.png"],
         websiteUrl: null
     }
+];
 
-]
+export default projects;

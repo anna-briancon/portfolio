@@ -58,8 +58,8 @@ const Projects: React.FC<ProjectsProps> = ({ categories, projects, setIsHovering
     }, [selectedProject, isFullSizeView])
 
     const filteredProjects = currentCategory === "Tous"
-        ? projects
-        : projects.filter(project => project.category === currentCategory)
+        ? [...projects].sort((a, b) => b.id - a.id)
+        : projects.filter(project => project.category === currentCategory).sort((a, b) => b.id - a.id)
 
     useEffect(() => {
         const checkScroll = () => {

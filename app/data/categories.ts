@@ -1,1 +1,0 @@
-export const categories = ["Tous", "Web", "Algorithmique", "Base de donnée", "Réseaux", "Autre"]

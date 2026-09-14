@@ -1,0 +1,193 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import Navigation from './components/Navigation'
+import Home from './components/pages/Home'
+import Projects from './components/pages/Projects'
+import About from './components/pages/About'
+import Contact from './components/pages/Contact'
+import AnimatedBackground from "./components/ui/AnimatedBackground"
+import { useAnalytics } from './components/AnalyticsTracker'
+import { sections } from './data/sections'
+import type { Project } from '@/lib/types'
+import {
+  mapPayloadProject,
+  mapAbout,
+  mapContact,
+  type AboutContent,
+  type ContactContent,
+} from '@/lib/payload-client'
+
+const defaultAbout = mapAbout(null)
+const defaultContact = mapContact(null)
+
+export default function Portfolio() {
+  const [currentSection, setCurrentSection] = useState("accueil")
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
+  const [isHovering, setIsHovering] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [projects, setProjects] = useState<Project[]>([])
+  const [categories, setCategories] = useState<string[]>(['Tous'])
+  const [about, setAbout] = useState<AboutContent>(defaultAbout)
+  const [contact, setContact] = useState<ContactContent>(defaultContact)
+
+  useAnalytics(currentSection)
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/projects?limit=100&depth=1&sort=-createdAt&where[or][0][hidden][equals]=false&where[or][1][hidden][exists]=false').then((r) => r.json()),
+      fetch('/api/categories?limit=100&sort=name').then((r) => r.json()),
+      fetch('/api/globals/about?depth=1').then((r) => r.json()),
+      fetch('/api/globals/contact').then((r) => r.json()),
+    ])
+      .then(([projectsData, categoriesData, aboutData, contactData]) => {
+        if (Array.isArray(projectsData?.docs)) {
+          setProjects(projectsData.docs.map(mapPayloadProject))
+        }
+
+        const categoryNames = Array.isArray(categoriesData?.docs)
+          ? categoriesData.docs
+              .map((doc: { name?: string }) => doc.name)
+              .filter((name: unknown): name is string => Boolean(name))
+          : []
+        setCategories(['Tous', ...categoryNames])
+
+        setAbout(mapAbout(aboutData))
+        setContact(mapContact(contactData))
+      })
+      .catch(() => {
+        // keep defaults on failure
+      })
+  }, [])
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY })
+    }
+
+    if (!isMobile) {
+      window.addEventListener("mousemove", handleMouseMove)
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+      window.removeEventListener("mousemove", handleMouseMove)
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDarkMode])
+
+  return (
+    <div className={`min-h-screen ${isDarkMode ? 'bg-[#1a1a1a] text-white' : 'bg-[#f3ebe1] text-[#333]'} overflow-hidden font-sans p-2 md:p-5 transition-colors duration-300 ${!isMobile ? 'cursor-none' : ''}`}>
+      <div className={`border-2 ${isDarkMode ? 'border-white' : 'border-black'} border-opacity-60 fixed inset-4 md:inset-9 overflow-hidden ${!isMobile ? 'cursor-none' : ''}`}>
+        <AnimatedBackground isDarkMode={isDarkMode} />
+        {!isMobile && (
+          <motion.div
+            className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-50"
+            style={{
+              x: cursorPosition.x - 12,
+              y: cursorPosition.y - 12,
+              borderWidth: 1,
+            }}
+            animate={{
+              scale: isHovering ? 1.5 : 1,
+              backgroundColor: isHovering
+                ? "transparent"
+                : isDarkMode
+                  ? "#f0ebe4"
+                  : "#333333",
+              borderColor: isHovering
+                ? isDarkMode
+                  ? "#f0ebe4"
+                  : "#333333"
+                : "transparent",
+            }}
+            transition={{ type: "spring", stiffness: 500, damping: 28 }}
+          />
+        )}
+        
+        <Navigation
+          sections={sections}
+          currentSection={currentSection}
+          setCurrentSection={setCurrentSection}
+          setIsHovering={setIsHovering}
+          isDarkMode={isDarkMode}
+          setIsDarkMode={setIsDarkMode}
+        />
+        <AnimatePresence mode="wait">
+          <motion.main
+            key={currentSection}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="absolute bottom-2 md:bottom-5 left-5 md:left-20 right-5 md:right-10 max-h-[calc(80vh-40px)] overflow-y-auto scrollbar-hide"
+          >
+            {currentSection === "accueil" && (
+              <Home setCurrentSection={setCurrentSection} setIsHovering={setIsHovering} />
+            )}
+            {currentSection === "projets" && (
+              <Projects
+                categories={categories}
+                projects={projects}
+                setIsHovering={setIsHovering}
+              />
+            )}
+            {currentSection === "à propos" && (
+              <About content={about} />
+            )}
+            {currentSection === "contact" && (
+              <Contact content={contact} setIsHovering={setIsHovering} />
+            )}
+          </motion.main>
+        </AnimatePresence>
+      </div>
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        body {
+          font-family: 'Raleway', sans-serif;
+          overflow: hidden;
+        }
+
+        .cursor-none,
+        .cursor-none * {
+          cursor: none !important;
+        }
+
+        h2, h3, h4, h5, h6 {
+          font-family: "Raleway", sans-serif;
+          font-weight: 300;
+        }
+
+        h1 {
+          font-weight: 200;
+        }
+
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+    </div>
+  )
+}

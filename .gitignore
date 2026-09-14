@@ -29,8 +29,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# env files (can opt-in for commiting if needed)
+# env files
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -38,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local database & Payload uploads (copy manually to VPS)
+/data/*
+!/data/.gitkeep
+/media/*
+!/media/.gitkeep
+
+# private deploy notes
+/deploy/VPS.md

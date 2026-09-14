@@ -1,11 +1,11 @@
-import { DatabaseSync } from "node:sqlite"
+import Database from "better-sqlite3"
 import fs from "node:fs"
 import path from "node:path"
 
 const DATA_DIR = path.join(process.cwd(), "data")
 const DB_PATH = path.join(DATA_DIR, "analytics.db")
 
-let db: DatabaseSync | null = null
+let db: Database.Database | null = null
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) {
@@ -13,7 +13,7 @@ function ensureDataDir() {
   }
 }
 
-function initSchema(database: DatabaseSync) {
+function initSchema(database: Database.Database) {
   database.exec(`
     CREATE TABLE IF NOT EXISTS analytics_sessions (
       id TEXT PRIMARY KEY,
@@ -39,10 +39,10 @@ function initSchema(database: DatabaseSync) {
   `)
 }
 
-export function getDb(): DatabaseSync {
+export function getDb(): Database.Database {
   if (db) return db
   ensureDataDir()
-  db = new DatabaseSync(DB_PATH)
+  db = new Database(DB_PATH)
   initSchema(db)
   return db
 }

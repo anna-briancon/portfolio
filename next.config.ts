@@ -7,6 +7,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  serverExternalPackages: ['better-sqlite3'],
   images: {
     localPatterns: [
       {
